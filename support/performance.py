@@ -13,7 +13,7 @@ def timer(func):
         end_time = time.perf_counter() # end of counting time
 
         run_time = end_time - start_time
-        if _print_performance == True:
+        if _print_performance:
             print(f"Finished {func.__name__!r} in {run_time:.4f} seconds.")
         return value
     return time_wrapper
