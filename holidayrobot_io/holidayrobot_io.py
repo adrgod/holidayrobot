@@ -1,17 +1,33 @@
 
 import pandas as pd
+import logging
 
-from config import holidayrobot_config as conf
+from config.holidayrobot_config import *
 
-def read_data():
-    df = pd.read_csv(conf._path)
-    return df
+class HoRo_io:
 
-def get_year_groups(df):
-    df['year_group'] = (df['Year'] // 5 * 5)
-    df = df[['year_group', 'Sex', 'VALUE']].groupby(['year_group', 'Sex']).sum().reset_index()
-    return df
+    def __init__(self, config):
+        """initialize HolidayRobotIO"""
+        pass
 
-def output_data(df):
-    df.to_csv(f"{conf._output_path}/holidayrobot.csv", index=False)
-    df.to_parquet(f"./{conf._output_path}/holidayrobot.parquet", index=False)
+    def read_data(self) -> pd.DataFrame:
+        """method to read data from source defined in the configuration"""
+        try:
+                self.data = pd.read_csv(path)
+        except (FileNotFoundError, PermissionError, OSError):
+                print("Error reading the source file.")
+        return self.data
+
+    def output_data(self) -> None:
+        """method to write the data to the specified output"""
+        if output_csv:
+            try:
+                self.data.to_csv(f"{output_path}/holidayrobot.csv", index=False)
+            except (FileNotFoundError, PermissionError, OSError):
+                logging.info("Error writing the csv file.")
+        if output_parquet:
+            try:
+                self.data.to_parquet(f"./{output_path}/holidayrobot.parquet", index=False)
+            except (FileNotFoundError, PermissionError, OSError):
+                print("Error writing the parquet file.")
+        logging.info("successfuly written all output.")            

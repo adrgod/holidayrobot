@@ -1,19 +1,30 @@
-
-
+import logging
 import pandas as pd
 
-from holidayrobot_io import holidayrobot_io as hr_io
-from holidayrobot_etl import holidayrobot_etl as hr_etl
+from HolidayRobot.HolidayRobot import HolidayRobot
+#from holidayrobot_etl.holidayrobot_etl import *
 from support import *
 
+from config.holidayrobot_config_class import HolidayRobotConfig
 
 def main():
-    df = hr_io.read_data()
-    df = hr_etl.fitler_first_year(df)
-    df = hr_io.get_year_groups(df)
-    df = hr_etl.rename_header(df)
-    hr_io.output_data(df)
+    # initializing logging config
+    FORMAT = '%(asctime)s %(levelname)-8s %(name)-15s %(message)s'
+    logging.basicConfig(format=FORMAT, filename='holidayrobot-executions.log', level=logging.INFO)
 
+    logging.info("Process started.")
+    HRConfig = HolidayRobotConfig()
+    if HRConfig.output_csv:
+        logging.info("Data will be written as a csv file.")
+    if HRConfig.output_parquet:
+        logging.info("Data will be written as a parquet file.")
+
+    HoRo = HolidayRobot(HRConfig)
+    HoRo.read_data()
+
+    HoRo.perform_etl() #all etl steps in one call
+
+    HoRo.output_data()
 
 if __name__ == '__main__':
     main()
