@@ -1,6 +1,7 @@
 
 import pandas as pd
 import logging
+from support.performance import timer
 
 from config.holidayrobot_config import *
 
@@ -8,8 +9,9 @@ class HoRo_io:
 
     def __init__(self, config):
         """initialize HolidayRobotIO"""
-        pass
+        self.config = config
 
+    @timer
     def read_data(self) -> pd.DataFrame:
         """method to read data from source defined in the configuration"""
         try:
@@ -18,6 +20,7 @@ class HoRo_io:
                 logging.info("Error reading the source file.")
         return self.data
 
+    @timer
     def output_data(self) -> None:
         """method to write the data to the specified output"""
         if output_csv:
