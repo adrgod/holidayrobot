@@ -2,10 +2,10 @@ import logging
 import pandas as pd
 
 from HolidayRobot.HolidayRobot import HolidayRobot
-#from holidayrobot_etl.holidayrobot_etl import *
+from config.holidayrobot_config_class import HolidayRobotConfig
+
 from support import *
 
-from config.holidayrobot_config_class import HolidayRobotConfig
 
 def main():
     # initializing logging config
@@ -19,6 +19,7 @@ def main():
     if HRConfig.output_parquet:
         logging.info("Data will be written as a parquet file.")
 
+    
     HoRo = HolidayRobot(HRConfig)
     HoRo.read_data()
 

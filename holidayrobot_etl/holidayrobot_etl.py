@@ -1,8 +1,6 @@
 
 #all functions to work on the data will be here
 import pandas as pd
-import functools
-import time
 from support.performance import timer
 
 
@@ -13,7 +11,7 @@ class HoRo_etl:
 
 
     @timer
-    def fitler_first_year(self):
+    def _fitler_first_year(self):
         return self.data[self.data['Statistic Label'].str.contains('First Year')]
 
     @timer
@@ -24,7 +22,7 @@ class HoRo_etl:
         return self.data
 
     @timer
-    def rename_header(self):
+    def _rename_header(self):
         self.data.columns = self.data.columns.str.lower()
         return self.data
     
@@ -32,6 +30,6 @@ class HoRo_etl:
     @timer
     def perform_etl(self) -> pd.DataFrame:
         """perform all etl actions on data"""
-        self.fitler_first_year()
+        self._fitler_first_year()
         self._get_year_groups()
-        self.rename_header()
+        self._rename_header()
