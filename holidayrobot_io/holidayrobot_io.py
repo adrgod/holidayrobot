@@ -15,7 +15,7 @@ class HoRo_io:
         try:
                 self.data = pd.read_csv(path)
         except (FileNotFoundError, PermissionError, OSError):
-                print("Error reading the source file.")
+                logging.info("Error reading the source file.")
         return self.data
 
     def output_data(self) -> None:
@@ -29,5 +29,5 @@ class HoRo_io:
             try:
                 self.data.to_parquet(f"./{output_path}/holidayrobot.parquet", index=False)
             except (FileNotFoundError, PermissionError, OSError):
-                print("Error writing the parquet file.")
+                logging.info("Error writing the parquet file.")
         logging.info("successfuly written all output.")            
