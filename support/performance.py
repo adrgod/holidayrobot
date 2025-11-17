@@ -1,8 +1,9 @@
+"""decorator to calculate the execution time."""
 import logging
 import functools
 import time
 
-from config.holidayrobot_config import *
+from config.holidayrobot_config import PRINT_PERFORMANCE
 
 def timer(func):
     """decorator to measure executions time"""
@@ -13,7 +14,7 @@ def timer(func):
         end_time = time.perf_counter() # end of counting time
 
         run_time = (end_time - start_time) * 1000
-        if print_performance:
-            logging.info(f"Finished {func.__name__!r} in {run_time:.4f} miliseconds.")
+        if PRINT_PERFORMANCE:
+            logging.info("Finished %r in %.4f milliseconds.", func.__name__, run_time)
         return value
     return time_wrapper
