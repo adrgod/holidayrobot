@@ -1,9 +1,9 @@
+"""config file to have all in one place for variables and params"""
 
-#config file to have all in one place for variables and params
+PATH ='https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/EDA14/CSV/1.0/en'
+OUTPUT_PATH = './data_output'
 
-path ='https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/EDA14/CSV/1.0/en'
-output_path = './data_output'
-
-output_csv = True
-output_parquet = True
-print_performance = True
+OUTPUT_CSV = True
+OUTPUT_PARQUET = True
+PRINT_PERFORMANCE = True
+FORCE_CREATE_OUTPUT = False
