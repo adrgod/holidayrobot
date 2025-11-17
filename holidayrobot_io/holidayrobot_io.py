@@ -23,7 +23,7 @@ class HoRo_io:
             logging.info("Error reading the source file.")
         return self.data
 
-    def offload_to_file(self, fformat):
+    def _offload_to_file(self, fformat):
         """method to write a file, independent of format. only considering csv and parquet."""
         try:
             if fformat == 'csv':
@@ -40,9 +40,9 @@ class HoRo_io:
         """method to write the data to the specified output"""    
         if os.path.isdir(OUTPUT_PATH):
             if OUTPUT_CSV:
-                self.offload_to_file('csv')
+                self._offload_to_file('csv')
             if OUTPUT_PARQUET:
-                self.offload_to_file('parquet')
+                self._offload_to_file('parquet')
             logging.info("Finished writing data.")
         elif FORCE_CREATE_OUTPUT:
             os.makedirs(OUTPUT_PATH)
