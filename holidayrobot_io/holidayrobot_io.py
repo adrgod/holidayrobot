@@ -12,7 +12,7 @@ class HoRo_io:
 
     def __init__(self, config):
         """initialize HolidayRobotIO"""
-        self.config = config
+        pass
 
     @timer
     def read_data(self) -> pd.DataFrame:
