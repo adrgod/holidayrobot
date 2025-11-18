@@ -18,6 +18,9 @@ class TestHolidayRobotFunctions(unittest.TestCase):
                 'VALUE': [100, 200, 300, 400, 500, 600, 700],
                 'Statistic Label': ['First Year', 'Third Year', 'First Year', 'No Year', 'Bla bla First Year', 'Bla bla Second Year', 'First Year']
             })
+        
+        # Ensure output directory exists for file tests
+        os.makedirs(OUTPUT_PATH, exist_ok=True)
     
     def test_read_data(self):
         """test reading the source data into a DataFrame"""
@@ -26,6 +29,7 @@ class TestHolidayRobotFunctions(unittest.TestCase):
         self.assertGreater(len(result), 1)
     
     def test_offload_to_file_csv(self):
+        print(f"Attempting to write file to: {OUTPUT_PATH}/holidayrobot.csv") # Add this line
         self.HoRo_utest._offload_to_file('csv')
         self.assertTrue(os.path.isfile(f"{OUTPUT_PATH}/holidayrobot.csv"))
 

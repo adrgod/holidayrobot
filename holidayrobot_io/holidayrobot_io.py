@@ -26,6 +26,9 @@ class HoRo_io:
     def _offload_to_file(self, fformat):
         """method to write a file, independent of format. only considering csv and parquet."""
         try:
+            # Ensure output directory exists
+            os.makedirs(OUTPUT_PATH, exist_ok=True)
+            
             if fformat == 'csv':
                 self.data.to_csv(f"{OUTPUT_PATH}/holidayrobot.csv", index=False)
                 logging.info("Successfuly written data into %s file.", fformat)
