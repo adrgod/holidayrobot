@@ -30,7 +30,7 @@ class HoRo_io:
                 self.data.to_csv(f"{OUTPUT_PATH}/holidayrobot.csv", index=False)
                 logging.info("Successfuly written data into %s file.", fformat)
             elif fformat == 'parquet':
-                self.data.to_parquet(f"{OUTPUT_PATH}/holidayrobot.csv", index=False)
+                self.data.to_parquet(f"{OUTPUT_PATH}/holidayrobot.parquet", index=False)
                 logging.info("Successfuly written data into %s file.", fformat)
         except (FileNotFoundError, PermissionError, OSError):
             logging.info("Error writing the %s file.", fformat)
