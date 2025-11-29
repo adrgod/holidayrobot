@@ -4,14 +4,14 @@ from support.performance import timer
 
 
 class HoRo_etl:
-    """class definition for HolidayRobot IO"""
+    """class definition for HolidayRobot ETL"""
 
     def __init__(self):
         self.data = pd.DataFrame()
 
 
     @timer
-    def _fitler_first_year(self):
+    def _filter_first_year(self):
         return self.data[self.data['Statistic Label'].str.contains('First Year')]
 
     @timer
@@ -30,6 +30,8 @@ class HoRo_etl:
     @timer
     def perform_etl(self) -> pd.DataFrame:
         """perform all etl actions on data"""
-        self._fitler_first_year()
-        self._get_year_groups()
-        self._rename_header()
+        # make sure each step updates and returns the DataFrame
+        self.data = self._filter_first_year()
+        self.data = self._get_year_groups()
+        self.data = self._rename_header()
+        return self.data
