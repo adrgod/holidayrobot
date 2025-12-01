@@ -45,3 +45,29 @@ def timer(func):
             logging.info("Finished %r in %.4f milliseconds.", func.__name__, run_time)
         return value
     return time_wrapper
+
+def retry(max_retries=3, delay=1.0, backoff=2.0, exceptions=(Exception,)):
+    """retry decorator"""
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            attempts = 0
+            wait = delay
+            while True:
+                try:
+                    return func(*args, **kwargs)
+                except exceptions as exc:
+                    if attempts > max_retries:
+                        logging.error("Reached max retries for funciont %s with %s retries", func.__name__, attempts)
+                        raise
+                    logging.warning("Attempt %s/%s for %s failed (%s). Retrying in %.1fs",
+                                    attempts, max_retries, func.__name__, exc, wait)
+                    time.sleep(wait)
+                    attempts += 1
+                    wait *= backoff
+        return wrapper
+    return decorator
+    
+
+
+
